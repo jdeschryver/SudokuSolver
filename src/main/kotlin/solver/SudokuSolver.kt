@@ -23,7 +23,7 @@ class SudokuSolver {
         return true
     }
 
-    fun deletePossibility(c: Pair<Int, Int>, value: Int) {
+    private fun deletePossibility(c: Pair<Int, Int>, value: Int) {
         val blockX = Math.floor(c.first / 3.0).toInt() * 3
         val blockY = Math.floor(c.second / 3.0).toInt() * 3
 
@@ -35,13 +35,13 @@ class SudokuSolver {
         }
     }
 
-    fun controlLoop(c: Pair<Int, Int>, x: Int, blockX: Int, blockY: Int): Pair<Int, Int> = when (x) {
+    private fun controlLoop(c: Pair<Int, Int>, x: Int, blockX: Int, blockY: Int): Pair<Int, Int> = when (x) {
         c.first -> Pair(0, 8)
         in blockX..blockX + 3 -> Pair(blockY, blockY + 3)
         else -> Pair(c.second, c.second)
     }
 
-    fun nextCell(c: Pair<Int, Int>): Pair<Int, Int> {
+    private fun nextCell(c: Pair<Int, Int>): Pair<Int, Int> {
         var x: Int;
         var y: Int
         var nextC: Pair<Int, Int>
