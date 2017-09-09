@@ -10,8 +10,8 @@ data class Cell(var value: Int = -1, val editable: Boolean = true, var possibili
 class Sudoku {
     private val matrix: MutableList<Cell> = mutableListOf()
     init {
-        for(x in 0..8){
-            for(y in 0..8){
+        repeat(9) { x ->
+            repeat(9) { y ->
                 matrix[matrixIndex(x,y)] = Cell()
             }
         }
