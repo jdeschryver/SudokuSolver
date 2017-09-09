@@ -1,7 +1,4 @@
 import solver.Sudoku
-import java.util.ArrayList
-
-
 
 /**
  * @author Jan De Schryver <Jan.DeSchryver@bucephalus.be>
@@ -14,12 +11,13 @@ class SudokuSolver{
     fun solve(c: Pair<Int, Int>) : Boolean{
         if(c.second < 8){
             val cell = sudoku.getCell(c)
-            for (value in cell.possibilities) {
-                cell.value = value
-                if (solve(nextCell(c))) {
-                    return true
+                for (value in cell.possibilities) {
+                    cell.value = value
+                    deletePossibility(c, value)
+                    if (solve(nextCell(c))) {
+                        return true
+                    }
                 }
-            }
             return false
         }
         return true
@@ -44,12 +42,19 @@ class SudokuSolver{
     }
 
     fun nextCell(c: Pair<Int, Int>): Pair<Int, Int>{
-        val x = (c.first + 1) % 9
-        val y = if (x == 0) c.second+1 else c.second
+        var x: Int; var y: Int
+        var nextC: Pair<Int, Int>
+        do{
+            x = (c.first + 1) % 9
+            y = if (x == 0) c.second+1 else c.second
+            nextC = Pair(x, y)
+        }while (sudoku.getCell(nextC).editable)
+
         return Pair(x, y)
     }
 }
 
 fun main(args: Array<String>) {
     println("Hello, world!")
+    println(Sudoku().toPrettyString())
 }
