@@ -16,6 +16,7 @@ class SudokuSolver{
             val cell = sudoku.getCell(c)
             for (value in cell.possibilities) {
                 cell.value = value
+                deletePossibility(c, value)
                 if (solve(nextCell(c))) {
                     return true
                 }
@@ -52,4 +53,5 @@ class SudokuSolver{
 
 fun main(args: Array<String>) {
     println("Hello, world!")
+    println(Sudoku().toPrettyString())
 }
