@@ -7,32 +7,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="446.0" prefWidth="396.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="442.0" prefWidth="402.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <center>
-        <GridPane fx:id="grid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="396.0" prefWidth="396.0" BorderPane.alignment="CENTER">
-            <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" valignment="CENTER" vgrow="NEVER" />
-                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" valignment="CENTER" vgrow="NEVER" />
-                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" valignment="CENTER" vgrow="NEVER" />
-                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" valignment="CENTER" vgrow="NEVER" />
-                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" valignment="CENTER" vgrow="NEVER" />
-                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" valignment="CENTER" vgrow="NEVER" />
-                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" valignment="CENTER" vgrow="NEVER" />
-                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" valignment="CENTER" vgrow="NEVER" />
-                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" valignment="CENTER" vgrow="NEVER" />
-            </rowConstraints>
-        </GridPane>
+
     </center>
     <bottom>
         <HBox alignment="CENTER" prefHeight="40.0" prefWidth="396.0" spacing="5.0" BorderPane.alignment="CENTER">
@@ -42,4 +19,128 @@
             </children>
         </HBox>
     </bottom>
+    <center>
+        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="132.0" />
+                <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="134.0" />
+                <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="134.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="134.0" vgrow="NEVER" />
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="134.0" vgrow="NEVER" />
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="132.0" vgrow="NEVER" />
+            </rowConstraints>
+            <children>
+                <GridPane fx:id="g1">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                    </rowConstraints>
+                </GridPane>
+                <GridPane fx:id="g2" GridPane.columnIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                    </rowConstraints>
+                </GridPane>
+                <GridPane fx:id="g3" GridPane.columnIndex="2">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                    </rowConstraints>
+                </GridPane>
+                <GridPane fx:id="g4" GridPane.rowIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                    </rowConstraints>
+                </GridPane>
+                <GridPane fx:id="g5" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                    </rowConstraints>
+                </GridPane>
+                <GridPane fx:id="g6" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                    </rowConstraints>
+                </GridPane>
+                <GridPane fx:id="g7" GridPane.rowIndex="2">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                    </rowConstraints>
+                </GridPane>
+                <GridPane fx:id="g8" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                    </rowConstraints>
+                </GridPane>
+                <GridPane fx:id="g9" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="44.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" vgrow="NEVER" />
+                    </rowConstraints>
+                </GridPane>
+            </children>
+        </GridPane>
+    </center>
 </BorderPane>
