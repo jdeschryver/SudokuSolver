@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils
  */
 
 
-data class Cell(var value: Int = -1, val editable: Boolean = true, var possibilities: MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9))
+data class Cell(var value: Int = -1, val editable: Boolean = true, val possibilities: MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9))
 
 class Sudoku {
     private val matrix: Array<Cell> = Array(9 * 9) { Cell() }
@@ -19,7 +19,7 @@ class Sudoku {
 
     fun toPrettyString(): String {
         val line = StringUtils.repeat('-', 5)
-        val center = "$line+$line+$line\n"
+        val center = StringUtils.repeat(line, "+", 3)+"\n"
 
         var prettyString = ""
         repeat(9) { i ->

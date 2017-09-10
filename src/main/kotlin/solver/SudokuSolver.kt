@@ -42,16 +42,14 @@ class SudokuSolver {
     }
 
     private fun nextCell(c: Pair<Int, Int>): Pair<Int, Int> {
-        var x: Int;
-        var y: Int
         var nextC: Pair<Int, Int>
         do {
-            x = (c.first + 1) % 9
-            y = if (x == 0) c.second + 1 else c.second
+            val x = (c.first + 1) % 9
+            val y = if (x == 0) c.second + 1 else c.second
             nextC = Pair(x, y)
         } while (sudoku.getCell(nextC).editable)
 
-        return Pair(x, y)
+        return nextC
     }
 }
 

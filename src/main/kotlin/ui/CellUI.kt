@@ -5,18 +5,14 @@ import javafx.scene.control.TextField
 import tornadofx.addClass
 import tornadofx.onChange
 
-class Cell(val row: Int, val col: Int) : TextField() {
+class CellUI(val row: Int, val col: Int) : TextField() {
 
     var value: Int? = null
 
     init {
         addClass(Styles.cell)
 
-        focusedProperty().onChange { newVal ->
-            if (newVal) {
-                selectAll()
-            }
-        }
+        focusedProperty().onChange { if (it) selectAll() }
 
         onMouseClicked = EventHandler {
             selectAll()

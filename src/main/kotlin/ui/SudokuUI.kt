@@ -34,13 +34,13 @@ class SudokuUI : View() {
     }
 
 
-    private val cells = arrayListOf<Cell>()
+    private val cells = arrayListOf<CellUI>()
 
 
     init {
         repeat(9) { i ->
             repeat(9) { j ->
-                val child = Cell(i, j)
+                val child = CellUI(i, j)
 
                 with(child) {
                     textProperty().onChange {
