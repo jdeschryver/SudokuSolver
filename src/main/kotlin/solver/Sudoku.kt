@@ -6,22 +6,34 @@ import org.apache.commons.lang3.StringUtils
  * @author Jan De Schryver <Jan.DeSchryver@bucephalus.be>
  */
 sealed class Cell(var value: Int)
-data class staticCell(private val v: Int) : Cell(v)
-data class editableCell(private val v: Int = -1,
+
+data class StaticCell(private val v: Int) : Cell(v)
+data class EditableCell(private val v: Int = -1,
                         val possibilities: MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9)) : Cell(v)
 
 
+sealed class SuperC {
+    abstract val value: Int
+}
+
+data class StaticC(override val value: Int) : SuperC()
+data class EditableC(
+        override var value: Int = -1,
+        val possibilities: MutableList<Int> = (1..9).toMutableList()
+) : SuperC()
+
+
 class Sudoku {
-    private val matrix: Array<Cell> = Array(9 * 9) { editableCell() }
+    private val matrix: Array<Cell> = Array(9 * 9) { EditableCell() }
 
     fun getCell(c: Pair<Int, Int>): Cell = matrix[matrixIndex(c.first, c.second)]
 
     // Coordinates top left are (0,0), bottom right (8,8)
     private fun matrixIndex(x: Int, y: Int) = x * 9 + y
 
-    fun init(setup: List<Triple<Int, Int, Int>>){
-        for ((x,y, value) in setup){
-            matrix[matrixIndex(x,y)] = staticCell(value)
+    fun init(setup: List<Triple<Int, Int, Int>>) {
+        for ((x, y, value) in setup) {
+            matrix[matrixIndex(x, y)] = StaticCell(value)
         }
     }
 
@@ -33,7 +45,7 @@ class Sudoku {
             val range = controlLoop(c, x, blockX, blockY)
             for (y in range.first..range.second) {
                 val cell = getCell(Pair(x, y))
-                if( cell is editableCell){
+                if (cell is EditableCell) {
                     cell.possibilities.remove(value)
                 }
             }
@@ -48,7 +60,7 @@ class Sudoku {
 
     fun toPrettyString(): String {
         val line = StringUtils.repeat('-', 5)
-        val center = StringUtils.repeat(line, "+", 3)+"\n"
+        val center = StringUtils.repeat(line, "+", 3) + "\n"
 
         var prettyString = ""
         repeat(9) { i ->

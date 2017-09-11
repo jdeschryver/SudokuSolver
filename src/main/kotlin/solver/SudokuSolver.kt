@@ -1,5 +1,5 @@
 import solver.Sudoku
-import solver.editableCell
+import solver.EditableCell
 
 /**
  * @author Jan De Schryver <Jan.DeSchryver@bucephalus.be>
@@ -12,7 +12,7 @@ class SudokuSolver {
     fun solve(c: Pair<Int, Int>): Boolean {
         if (c.second < 8) {
             val cell = sudoku.getCell(c)
-            if(cell is editableCell) {
+            if (cell is EditableCell) {
                 for (value in cell.possibilities) {
                     cell.value = value
                     sudoku.deletePossibility(c, value)
@@ -20,7 +20,7 @@ class SudokuSolver {
                         return true
                     }
                 }
-            }else if (solve(nextCell(c))) {
+            } else if (solve(nextCell(c))) {
                 return true
             }
             return false
@@ -35,7 +35,7 @@ class SudokuSolver {
             val x = (c.first + 1) % 9
             val y = if (x == 0) c.second + 1 else c.second
             nextC = Pair(x, y)
-        } while (sudoku.getCell(nextC) is editableCell)
+        } while (sudoku.getCell(nextC) is EditableCell)
 
         return nextC
     }
