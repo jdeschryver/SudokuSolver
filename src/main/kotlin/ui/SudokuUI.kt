@@ -42,7 +42,7 @@ class SudokuUI : View() {
             repeat(9) { j ->
                 val child = CellUI(i, j)
 
-                with(child) {
+                child.run {
                     textProperty().onChange {
                         if (!text.isEmpty())
                             selectCell(row, col + 1)

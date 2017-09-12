@@ -52,7 +52,7 @@ class Sudoku {
 
     fun toPrettyString(): String {
         val line = StringUtils.repeat('-', 5)
-        val center = StringUtils.repeat(line, "+", 3)+"\n"
+        val center = StringUtils.repeat(line, "+", 3) + "\n"
 
         var prettyString = ""
         repeat(9) { i ->
