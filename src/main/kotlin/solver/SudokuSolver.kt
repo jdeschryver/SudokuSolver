@@ -7,16 +7,19 @@ import solver.ECell
 
 class SudokuSolver {
 
-    fun solve(sudoku: Sudoku, c: Pair<Int, Int>): Boolean {
+    fun solve(s: Sudoku, c: Pair<Int, Int>): Boolean {
+        var sudoku = s
         if (c.second < 8) {
             val cell = sudoku.getCell(c)
             if(cell is ECell) {
                 for (value in cell.possibilities) {
+                    var oldSudoku = sudoku.copy()
                     cell.value = value
                     sudoku.deletePossibility(c, value)
                     if (solve(sudoku.copy(), nextCell(sudoku, c))) {
                         return true
                     }
+                    sudoku = oldSudoku
                 }
             }else if (solve(sudoku.copy(), nextCell(sudoku, c))) {
                 return true
