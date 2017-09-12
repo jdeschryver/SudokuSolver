@@ -5,8 +5,7 @@ import org.apache.commons.lang3.StringUtils
 /**
  * @author Jan De Schryver <Jan.DeSchryver@bucephalus.be>
  */
-class Sudoku {
-    private var matrix: Array<Cell> = Array(9 * 9) { ECell() }
+class Sudoku(private val matrix: Array<Cell> = Array(9 * 9) { ECell() }) {
 
     fun getCell(c: Pair<Int, Int>): Cell = matrix[matrixIndex(c.first, c.second)]
 
@@ -41,11 +40,8 @@ class Sudoku {
     }
 
     fun copy() : Sudoku{
-        val sudoku = Sudoku()
-        val matrixCopy = mutableListOf<Cell>()
-        matrix.forEach { it -> matrixCopy.add(it.copy())}
-        sudoku.matrix = matrixCopy.toTypedArray()
-        return sudoku
+        val matrixCopy = Array(matrix.size) { matrix[it].copy() }
+        return Sudoku(matrixCopy)
     }
 
     fun toPrettyString(): String {
