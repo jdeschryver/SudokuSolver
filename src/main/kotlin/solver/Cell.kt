@@ -8,19 +8,14 @@ sealed class Cell {
 class SCell(override val value: Int) : Cell() {
 
     // No operations are executed on a static cell, copy returns same object
-    override fun copy(): Cell {
-        return this
-    }
+    override fun copy() = this
 }
 
 class ECell(override var value: Int = -1,
             val possibilities: MutableList<Int> = (1..9).toMutableList()) : Cell() {
 
-    override fun copy(): Cell {
-        return ECell(value, ArrayList(possibilities))
-    }
+    override fun copy() = ECell(value, ArrayList(possibilities))
 
-    override fun toString(): String {
-        return "$value, $possibilities "
-    }
+    override fun toString() = "$value, $possibilities"
+
 }
