@@ -17,9 +17,7 @@ class ECell(override var value: Int = -1,
             val possibilities: MutableList<Int> = (1..9).toMutableList()) : Cell() {
 
     override fun copy(): Cell {
-        val possibilities = mutableListOf<Int>()
-        possibilities.forEach { it -> possibilities.add(it) }
-        return ECell(value, possibilities)
+        return ECell(value, ArrayList(possibilities))
     }
 
     override fun toString(): String {

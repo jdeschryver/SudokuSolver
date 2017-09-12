@@ -45,10 +45,8 @@ class Sudoku {
         val matrixCopy = mutableListOf<Cell>()
         matrix.forEach { it -> matrixCopy.add(it.copy())}
         sudoku.matrix = matrixCopy.toTypedArray()
-
         return sudoku
     }
-
 
     fun toPrettyString(): String {
         val line = StringUtils.repeat('-', 5)
