@@ -5,14 +5,8 @@ import org.apache.commons.lang3.StringUtils
 /**
  * @author Jan De Schryver <Jan.DeSchryver@bucephalus.be>
  */
-sealed class Cell(var value: Int)
-data class staticCell(private val v: Int) : Cell(v)
-data class editableCell(private val v: Int = -1,
-                        val possibilities: MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9)) : Cell(v)
-
-
 class Sudoku {
-    private val matrix: Array<Cell> = Array(9 * 9) { editableCell() }
+    private var matrix: Array<Cell> = Array(9 * 9) { ECell() }
 
     fun getCell(c: Pair<Int, Int>): Cell = matrix[matrixIndex(c.first, c.second)]
 
@@ -21,7 +15,7 @@ class Sudoku {
 
     fun init(setup: List<Triple<Int, Int, Int>>){
         for ((x,y, value) in setup){
-            matrix[matrixIndex(x,y)] = staticCell(value)
+            matrix[matrixIndex(x,y)] = SCell(value)
         }
     }
 
@@ -33,7 +27,7 @@ class Sudoku {
             val range = controlLoop(c, x, blockX, blockY)
             for (y in range.first..range.second) {
                 val cell = getCell(Pair(x, y))
-                if( cell is editableCell){
+                if( cell is ECell){
                     cell.possibilities.remove(value)
                 }
             }
@@ -45,6 +39,16 @@ class Sudoku {
         in blockX..blockX + 3 -> Pair(blockY, blockY + 3)
         else -> Pair(c.second, c.second)
     }
+
+    fun copy() : Sudoku{
+        val sudoku = Sudoku()
+        val matrixCopy = mutableListOf<Cell>()
+        matrix.forEach { it -> matrixCopy.add(it.copy())}
+        sudoku.matrix = matrixCopy.toTypedArray()
+
+        return sudoku
+    }
+
 
     fun toPrettyString(): String {
         val line = StringUtils.repeat('-', 5)
