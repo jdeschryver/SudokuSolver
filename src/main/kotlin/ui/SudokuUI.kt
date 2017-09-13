@@ -35,7 +35,7 @@ class SudokuUI : View() {
     init {
         title = "Sudoku Solver"
 
-        solveStatus(true)
+        solveStatus(false)
 
         currentStage?.apply {
             isResizable = false
@@ -70,7 +70,7 @@ class SudokuUI : View() {
                                 selectCell(row + 8, col + 8)
                             }
                             KeyCode.DELETE -> clear()
-                            KeyCode.ENTER, KeyCode.RIGHT -> selectCell(row, col + 1)
+                            KeyCode.ENTER, KeyCode.RIGHT, KeyCode.TAB -> selectCell(row, col + 1)
                             KeyCode.LEFT -> selectCell(row + 8, col + 8)
                             KeyCode.UP -> selectCell(row + 8, col)
                             KeyCode.DOWN -> selectCell(row + 1, col)
@@ -91,14 +91,14 @@ class SudokuUI : View() {
         cells[id].requestFocus()
     }
 
-    private fun solveStatus(visible: Boolean) {
-        grid.isDisable = !visible
-        solveButton.isDisable = !visible
-        cancelButton.isDisable = visible
+    private fun solveStatus(solving: Boolean) {
+        grid.isDisable = solving
+        solveButton.isDisable = solving
+        cancelButton.isDisable = !solving
     }
 
     fun solve() {
-        solveStatus(false)
+        solveStatus(true)
 
         currentSolve = runAsync {
             val triples = cells.filter { it.value != null }.map { Triple(it.row, it.col, it.value!!) }
@@ -109,7 +109,7 @@ class SudokuUI : View() {
             sudoku
         } ui {
             currentSolve = null
-            solveStatus(true)
+            solveStatus(false)
         }
         currentSolve?.onCancelled = EventHandler { println("onCancelled called") }
     }
@@ -118,7 +118,7 @@ class SudokuUI : View() {
         println("cancel")
         currentSolve?.cancel()
         currentSolve = null
-        solveStatus(true)
+        solveStatus(false)
     }
 
     fun reset() {
@@ -126,6 +126,6 @@ class SudokuUI : View() {
             it.value = null
             it.isEditable = true
         }
-        solveStatus(true)
+        solveStatus(false)
     }
 }
