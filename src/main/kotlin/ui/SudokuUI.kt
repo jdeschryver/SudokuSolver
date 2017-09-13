@@ -74,8 +74,9 @@ class SudokuUI : View() {
                             KeyCode.LEFT -> selectCell(row + 8, col + 8)
                             KeyCode.UP -> selectCell(row + 8, col)
                             KeyCode.DOWN -> selectCell(row + 1, col)
-                            else -> it.consume()
+                            else -> {}
                         }
+                        it.consume()
                     }
                 }
 
