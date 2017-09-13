@@ -26,7 +26,7 @@ class SudokuUI : View() {
     private val g9: GridPane by fxid()
 
     private val solveButton: Button by fxid()
-    private val resetButton: Button by fxid()
+    private val cancelButton: Button by fxid()
 
     private val grids = listOf(g1, g2, g3, g4, g5, g6, g7, g8, g9)
 
@@ -35,8 +35,14 @@ class SudokuUI : View() {
     init {
         title = "Sudoku Solver"
 
+        solveStatus(true)
+
         currentStage?.apply {
             isResizable = false
+            onCloseRequest = EventHandler {
+                println("close")
+                currentSolve?.cancel()
+            }
         }
 
         grids.forEach { it.addClass(Styles.grid) }
@@ -85,28 +91,41 @@ class SudokuUI : View() {
         cells[id].requestFocus()
     }
 
+    private fun solveStatus(visible: Boolean) {
+        grid.isDisable = !visible
+        solveButton.isDisable = !visible
+        cancelButton.isDisable = visible
+    }
+
     fun solve() {
-        grid.isDisable = true
-        solveButton.isDisable = true
+        solveStatus(false)
 
         currentSolve = runAsync {
-           Sudoku()
+            val triples = cells.filter { it.value != null }.map { Triple(it.row, it.col, it.value!!) }
+            val sudoku = Sudoku()
+            sudoku.init(triples)
+            println(SudokuSolver.solve(sudoku))
+            println(sudoku.toPrettyString())
+            sudoku
         } ui {
-            grid.isDisable = false
-            solveButton.isDisable = false
+            currentSolve = null
+            solveStatus(true)
         }
+        currentSolve?.onCancelled = EventHandler { println("onCancelled called") }
+    }
 
-        println("solve")
+    fun cancel() {
+        println("cancel")
+        currentSolve?.cancel()
+        currentSolve = null
+        solveStatus(true)
     }
 
     fun reset() {
-        currentSolve?.cancel()
         cells.forEach {
             it.value = null
             it.isEditable = true
         }
-        grid.isDisable = false
-        solveButton.isDisable = false
-        println("reset")
+        solveStatus(true)
     }
 }

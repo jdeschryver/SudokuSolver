@@ -1,19 +1,26 @@
 import solver.Sudoku
 import solver.ECell
+import solver.SCell
 
 /**
  * @author Jan De Schryver <Jan.DeSchryver@bucephalus.be>
  */
 
-class SudokuSolver {
+object SudokuSolver {
+
+    fun solve(s: Sudoku) {
+        val n = nextCell(s, 0 to 0)
+        solve(s, n)
+    }
 
     fun solve(s: Sudoku, c: Pair<Int, Int>): Boolean {
         var sudoku = s
         if (c.second < 8) {
             val cell = sudoku.getCell(c)
             if(cell is ECell) {
-                for (value in cell.possibilities) {
-                    var oldSudoku = sudoku.copy()
+                val clone = ArrayList(cell.possibilities)
+                for (value in clone) {
+                    val oldSudoku = sudoku.copy()
                     cell.value = value
                     sudoku.deletePossibility(c, value)
                     if (solve(sudoku.copy(), nextCell(sudoku, c))) {
@@ -36,7 +43,7 @@ class SudokuSolver {
             val x = (c.first + 1) % 9
             val y = if (x == 0) c.second + 1 else c.second
             nextC = Pair(x, y)
-        } while (sudoku.getCell(nextC) is ECell)
+        } while (sudoku.getCell(nextC) is SCell)
 
         return nextC
     }
