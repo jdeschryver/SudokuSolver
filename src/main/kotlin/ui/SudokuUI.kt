@@ -11,6 +11,8 @@ import tornadofx.View
 import tornadofx.addClass
 import tornadofx.onChange
 import tornadofx.warning
+import kotlin.system.measureNanoTime
+import kotlin.system.measureTimeMillis
 
 class SudokuUI : View() {
     override val root: BorderPane by fxml()
@@ -96,6 +98,14 @@ class SudokuUI : View() {
         cancelButton.isDisable = !solving
     }
 
+    private fun formatNano(nano: Long): String {
+        val nanos = nano % 1000L
+        val micros = (nano / 1_000L) % 1000L
+        val millis = (nano / 1_000_000L) % 1000L
+        val sec = nano / 1_000_000_000L
+        return "${sec}s ${millis}ms ${micros}µs ${nanos}ns"
+    }
+
     fun solve() {
         solveStatus(true)
 
@@ -104,7 +114,13 @@ class SudokuUI : View() {
             val sudoku = Sudoku(triples)
             //sudoku.init(triples)
             //println(SudokuSolver.solve(sudoku))
-            sudoku.solve() to sudoku
+            var solved = false
+            val nano = measureNanoTime {
+                solved = sudoku.solve()
+            }
+            println(nano)
+            println("solved in ${formatNano(nano)}.")
+            solved to sudoku
         } ui { (solved, sudoku) ->
             if (solved) {
                 sudoku.toArray().forEachIndexed { index, value ->
