@@ -6,10 +6,11 @@ import javafx.scene.control.Button
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.GridPane
-import solver.Sudoku
+import solver2.Sudoku
 import tornadofx.View
 import tornadofx.addClass
 import tornadofx.onChange
+import tornadofx.warning
 
 class SudokuUI : View() {
     override val root: BorderPane by fxml()
@@ -30,7 +31,9 @@ class SudokuUI : View() {
 
     private val grids = listOf(g1, g2, g3, g4, g5, g6, g7, g8, g9)
 
-    private var currentSolve: Task<Sudoku>? = null
+    private var currentSolve: Task<Pair<Boolean, Sudoku>>? = null
+
+    private val cells = ArrayList<CellUI>(9 * 9)
 
     init {
         title = "Sudoku Solver"
@@ -47,12 +50,6 @@ class SudokuUI : View() {
 
         grids.forEach { it.addClass(Styles.grid) }
 
-    }
-
-
-    private val cells = ArrayList<CellUI>(9 * 9)
-
-    init {
         repeat(9) { row ->
             repeat(9) { col ->
                 val child = CellUI(row, col)
@@ -74,7 +71,8 @@ class SudokuUI : View() {
                             KeyCode.LEFT -> selectCell(row + 8, col + 8)
                             KeyCode.UP -> selectCell(row + 8, col)
                             KeyCode.DOWN -> selectCell(row + 1, col)
-                            else -> {}
+                            else -> {
+                            }
                         }
                         it.consume()
                     }
@@ -103,12 +101,18 @@ class SudokuUI : View() {
 
         currentSolve = runAsync {
             val triples = cells.filter { it.value != null }.map { Triple(it.row, it.col, it.value!!) }
-            val sudoku = Sudoku()
-            sudoku.init(triples)
-            println(SudokuSolver.solve(sudoku))
-            println(sudoku.toPrettyString())
-            sudoku
-        } ui {
+            val sudoku = Sudoku(triples)
+            //sudoku.init(triples)
+            //println(SudokuSolver.solve(sudoku))
+            sudoku.solve() to sudoku
+        } ui { (solved, sudoku) ->
+            if (solved) {
+                sudoku.toArray().forEachIndexed { index, value ->
+                    cells[index].value = value
+                }
+            } else {
+                warning("Sudoku cannot be solved.")
+            }
             currentSolve = null
             solveStatus(false)
         }
