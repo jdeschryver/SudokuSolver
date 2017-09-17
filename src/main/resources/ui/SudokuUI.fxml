@@ -14,9 +14,10 @@
     <bottom>
         <HBox alignment="CENTER" prefHeight="40.0" prefWidth="396.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="solveButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#solve" prefHeight="30.0" prefWidth="75.0" text="Solve" />
-            <Button fx:id="cancelButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#cancel" prefHeight="30.0" prefWidth="75.0" text="Cancel" />
-                <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#reset" prefHeight="30.0" prefWidth="75.0" text="Reset" />
+                <Button fx:id="solveButton1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#solve1" prefHeight="30.0" prefWidth="75.0" text="K Solve" />
+            <Button fx:id="solveButton2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#solve2" prefHeight="30.0" prefWidth="75.0" text="J Solve" />
+                <Button fx:id="resetButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#reset" prefHeight="30.0" prefWidth="75.0" text="Reset" />
+            <Button fx:id="clearButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#clear" prefHeight="30.0" prefWidth="75.0" text="Clear" />
             </children>
         </HBox>
     </bottom>

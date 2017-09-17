@@ -1,18 +1,15 @@
 package ui
 
-import javafx.concurrent.Task
 import javafx.event.EventHandler
 import javafx.scene.control.Button
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.GridPane
-import solver2.Sudoku
 import tornadofx.View
 import tornadofx.addClass
 import tornadofx.onChange
 import tornadofx.warning
 import kotlin.system.measureNanoTime
-import kotlin.system.measureTimeMillis
 
 class SudokuUI : View() {
     override val root: BorderPane by fxml()
@@ -28,14 +25,15 @@ class SudokuUI : View() {
     private val g8: GridPane by fxid()
     private val g9: GridPane by fxid()
 
-    private val solveButton: Button by fxid()
-    private val cancelButton: Button by fxid()
+    private val solveButton1: Button by fxid()
+    private val solveButton2: Button by fxid()
+    private val resetButton: Button by fxid()
+    private val clearButton: Button by fxid()
 
     private val grids = listOf(g1, g2, g3, g4, g5, g6, g7, g8, g9)
 
-    private var currentSolve: Task<Pair<Boolean, Sudoku>>? = null
-
     private val cells = ArrayList<CellUI>(9 * 9)
+    private var backup: List<Int?> = ArrayList(9 * 9)
 
     init {
         title = "Sudoku Solver"
@@ -44,10 +42,6 @@ class SudokuUI : View() {
 
         currentStage?.apply {
             isResizable = false
-            onCloseRequest = EventHandler {
-                println("close")
-                currentSolve?.cancel()
-            }
         }
 
         grids.forEach { it.addClass(Styles.grid) }
@@ -94,8 +88,11 @@ class SudokuUI : View() {
 
     private fun solveStatus(solving: Boolean) {
         grid.isDisable = solving
-        solveButton.isDisable = solving
-        cancelButton.isDisable = !solving
+        solveButton1.isDisable = solving
+        solveButton2.isDisable = solving
+        resetButton.isDisable = solving
+        clearButton.isDisable = solving
+
     }
 
     private fun formatNano(nano: Long): String {
@@ -106,19 +103,17 @@ class SudokuUI : View() {
         return "${sec}s ${millis}ms ${micros}µs ${nanos}ns"
     }
 
-    fun solve() {
+    fun solve1() {
         solveStatus(true)
+        backup = cells.map { it.value }
 
-        currentSolve = runAsync {
+        runAsync {
             val triples = cells.filter { it.value != null }.map { Triple(it.row, it.col, it.value!!) }
-            val sudoku = Sudoku(triples)
-            //sudoku.init(triples)
-            //println(SudokuSolver.solve(sudoku))
+            val sudoku = solver2.Sudoku(triples)
             var solved = false
             val nano = measureNanoTime {
                 solved = sudoku.solve()
             }
-            println(nano)
             println("solved in ${formatNano(nano)}.")
             solved to sudoku
         } ui { (solved, sudoku) ->
@@ -129,20 +124,45 @@ class SudokuUI : View() {
             } else {
                 warning("Sudoku cannot be solved.")
             }
-            currentSolve = null
             solveStatus(false)
         }
-        currentSolve?.onCancelled = EventHandler { println("onCancelled called") }
     }
 
-    fun cancel() {
-        println("cancel")
-        currentSolve?.cancel()
-        currentSolve = null
-        solveStatus(false)
+    fun solve2() {
+        solveStatus(true)
+        backup = cells.map { it.value }
+
+        runAsync {
+            val triples = cells.filter { it.value != null }.map { Triple(it.row, it.col, it.value!!) }
+            val sudoku = solver.Sudoku()
+            sudoku.init(triples)
+            var solved = false
+            val nano = measureNanoTime {
+                //solved = SudokuSolver.solve(sudoku)
+            }
+            println("solved in ${formatNano(nano)}.")
+            solved to sudoku
+        } ui { (solved, sudoku) ->
+            if (solved) {
+                /*
+                sudoku.matrix.forEachIndexed { index, value ->
+                    cells[index].value = value
+                }
+                */
+            } else {
+                warning("Sudoku cannot be solved.")
+            }
+            solveStatus(false)
+        }
     }
 
     fun reset() {
+        backup.forEachIndexed { index, value ->
+            cells[index].value = value
+        }
+    }
+
+    fun clear() {
         cells.forEach {
             it.value = null
             it.isEditable = true

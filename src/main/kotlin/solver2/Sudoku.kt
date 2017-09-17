@@ -43,8 +43,6 @@ class Sudoku(values: List<Triple<Int, Int, Int>>) {
 
     fun solve(): Boolean {
         val index = nextECell()
-        println(isValid)
-        println(index)
         return index?.let {
             isValid && solve(index)
         } ?: false
