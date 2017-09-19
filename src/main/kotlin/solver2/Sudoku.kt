@@ -1,5 +1,6 @@
 package solver2
 
+import api.Sudoku
 import org.apache.commons.lang3.StringUtils
 
 data class Possibilities(private val rowC: MutableSet<Int>, private val colC: MutableSet<Int>, private val squareC: MutableSet<Int>) {
@@ -20,7 +21,7 @@ data class Possibilities(private val rowC: MutableSet<Int>, private val colC: Mu
     fun combine() = rowC.filter { it in colC }.filter { it in squareC }
 }
 
-class Sudoku(values: List<Triple<Int, Int, Int>>) {
+class SudokuV2: Sudoku {
 
     private val board = Array<Cell>(9 * 9) { ECell() }
     private val rowPossibilities = Array(9) { (1..9).toHashSet() }
@@ -30,7 +31,9 @@ class Sudoku(values: List<Triple<Int, Int, Int>>) {
     var isValid: Boolean = true
         private set
 
-    init {
+    override fun toArray() = board.map { it.value }.toTypedArray()
+
+    override fun fill(values: List<Triple<Int, Int, Int>>) {
         values.forEach { (row, col, value) ->
             this[row, col] = SCell(value)
             if (!possibilities(row, col).remove(value)) {
@@ -39,9 +42,7 @@ class Sudoku(values: List<Triple<Int, Int, Int>>) {
         }
     }
 
-    fun toArray() = board.map { it.value }.toTypedArray()
-
-    fun solve(): Boolean {
+    override fun solve(): Boolean {
         val index = nextECell()
         return index?.let {
             isValid && solve(index)

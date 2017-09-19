@@ -1,10 +1,15 @@
 package ui
 
+import api.Sudoku
 import javafx.event.EventHandler
 import javafx.scene.control.Button
+import javafx.scene.control.ChoiceBox
+import javafx.scene.control.ComboBox
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.GridPane
+import javafx.util.StringConverter
+import solver2.SudokuV2
 import tornadofx.View
 import tornadofx.addClass
 import tornadofx.onChange
@@ -25,8 +30,9 @@ class SudokuUI : View() {
     private val g8: GridPane by fxid()
     private val g9: GridPane by fxid()
 
-    private val solveButton1: Button by fxid()
-    private val solveButton2: Button by fxid()
+    private val comboBox: ComboBox<String> by fxid()
+
+    private val solveButton: Button by fxid()
     private val resetButton: Button by fxid()
     private val clearButton: Button by fxid()
 
@@ -34,6 +40,11 @@ class SudokuUI : View() {
 
     private val cells = ArrayList<CellUI>(9 * 9)
     private var backup: List<Int?> = ArrayList(9 * 9)
+
+    private val sudokuEntries = hashMapOf<String, () -> Sudoku>(
+            //"J Solver" to todo: <add constructor ref here>,
+            "K Solver" to ::SudokuV2
+    )
 
     init {
         title = "Sudoku Solver"
@@ -43,6 +54,9 @@ class SudokuUI : View() {
         currentStage?.apply {
             isResizable = false
         }
+
+        comboBox.items.addAll(sudokuEntries.keys)
+        comboBox.value = sudokuEntries.keys.first()
 
         grids.forEach { it.addClass(Styles.grid) }
 
@@ -88,8 +102,8 @@ class SudokuUI : View() {
 
     private fun solveStatus(solving: Boolean) {
         grid.isDisable = solving
-        solveButton1.isDisable = solving
-        solveButton2.isDisable = solving
+        comboBox.isDisable = solving
+        solveButton.isDisable = solving
         resetButton.isDisable = solving
         clearButton.isDisable = solving
 
@@ -103,54 +117,36 @@ class SudokuUI : View() {
         return "${sec}s ${millis}ms ${micros}µs ${nanos}ns"
     }
 
-    fun solve1() {
+    fun solve() {
         solveStatus(true)
-        backup = cells.map { it.value }
 
         runAsync {
+            backup = cells.map { it.value }
             val triples = cells.filter { it.value != null }.map { Triple(it.row, it.col, it.value!!) }
-            val sudoku = solver2.Sudoku(triples)
-            var solved = false
-            val nano = measureNanoTime {
-                solved = sudoku.solve()
+
+            val factory = sudokuEntries[comboBox.value]
+            when (factory) {
+                null -> false to null
+                else -> {
+                    val sudoku: Sudoku = factory.invoke()
+
+                    sudoku.fill(triples)
+                    var solved = false
+                    val nano = measureNanoTime {
+                        solved = sudoku.solve()
+                    }
+                    println("solved in ${formatNano(nano)}.")
+                    solved to sudoku
+                }
             }
-            println("solved in ${formatNano(nano)}.")
-            solved to sudoku
+
         } ui { (solved, sudoku) ->
-            if (solved) {
-                sudoku.toArray().forEachIndexed { index, value ->
+            when {
+                sudoku == null -> warning("Specified solver could not be found.")
+                solved -> sudoku.toArray().forEachIndexed { index, value ->
                     cells[index].value = value
                 }
-            } else {
-                warning("Sudoku cannot be solved.")
-            }
-            solveStatus(false)
-        }
-    }
-
-    fun solve2() {
-        solveStatus(true)
-        backup = cells.map { it.value }
-
-        runAsync {
-            val triples = cells.filter { it.value != null }.map { Triple(it.row, it.col, it.value!!) }
-            val sudoku = solver.Sudoku()
-            sudoku.init(triples)
-            var solved = false
-            val nano = measureNanoTime {
-                //solved = SudokuSolver.solve(sudoku)
-            }
-            println("solved in ${formatNano(nano)}.")
-            solved to sudoku
-        } ui { (solved, sudoku) ->
-            if (solved) {
-                /*
-                sudoku.matrix.forEachIndexed { index, value ->
-                    cells[index].value = value
-                }
-                */
-            } else {
-                warning("Sudoku cannot be solved.")
+                else -> warning("Sudoku cannot be solved.")
             }
             solveStatus(false)
         }

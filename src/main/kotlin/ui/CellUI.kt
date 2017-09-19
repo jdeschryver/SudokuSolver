@@ -12,7 +12,7 @@ class CellUI(val row: Int, val col: Int) : TextField() {
         set(v) = if (v in 1..9) text = v.toString() else clear()
 
     init {
-        addClass(Styles.cell)
+        addClass(Styles.cellUI)
 
         focusedProperty().onChange { if (it) selectAll() }
 

@@ -10,12 +10,12 @@ class SudokuApp : App(SudokuUI::class, Styles::class)
 class Styles : Stylesheet() {
 
     companion object {
-        val cell by cssclass()
+        val cellUI by cssclass()
         val grid by cssclass()
     }
 
     init {
-        cell {
+        cellUI {
             prefHeight = 44.px
             prefWidth = 44.px
 
@@ -30,7 +30,6 @@ class Styles : Stylesheet() {
         grid {
             borderColor = multi(box(Color.BLACK))
             gridLinesVisible = true
-            borderColor = multi(box(Color.BLACK))
             borderWidth = multi(box(2.px))
         }
 
