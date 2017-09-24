@@ -18,7 +18,7 @@ data class Possibilities(private val rowC: MutableSet<Int>, private val colC: Mu
         return b1 && b2 && b3
     }
 
-    fun combine() = rowC.filter { it in colC }.filter { it in squareC }
+    fun combine() = rowC.intersect(colC).intersect(squareC)
 }
 
 class SudokuV2: Sudoku {
