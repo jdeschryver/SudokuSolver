@@ -1,5 +1,8 @@
 package solver2
 
+import api.Cell
+import api.ECell
+import api.SCell
 import api.Sudoku
 import org.apache.commons.lang3.StringUtils
 
@@ -21,7 +24,7 @@ data class Possibilities(private val rowC: MutableSet<Int>, private val colC: Mu
     fun combine() = rowC.intersect(colC).intersect(squareC)
 }
 
-class SudokuV2: Sudoku {
+class SudokuV2: Sudoku() {
 
     private val board = Array<Cell>(9 * 9) { ECell() }
     private val rowPossibilities = Array(9) { (1..9).toHashSet() }
@@ -30,8 +33,6 @@ class SudokuV2: Sudoku {
 
     var isValid: Boolean = true
         private set
-
-    override fun toArray() = board.map { it.value }.toTypedArray()
 
     override fun fill(values: List<Triple<Int, Int, Int>>) {
         values.forEach { (row, col, value) ->
@@ -83,14 +84,6 @@ class SudokuV2: Sudoku {
         val poss = possibilities(row, col)
         old?.let { poss.add(old) }
         new?.let { poss.remove(new) }
-    }
-
-    private operator fun get(row: Int, col: Int) = board[row * 9 + col]
-
-    private operator fun set(row: Int, col: Int, cell: Cell) {
-        val index = row * 9 + col
-        //updateConstraints(row, col, board[index].value, cell.value)
-        board[index] = cell
     }
 
     private operator fun set(row: Int, col: Int, value: Int?) {

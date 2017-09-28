@@ -31,7 +31,7 @@ compileTestKotlin {
 
 dependencies {
     ext.kotlin_version = '1.1.50'
-    ext.tornadofx_version = '1.7.11'
+    ext.bitvector_version = '0.1.4'
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     compile "no.tornado:tornadofx:$tornadofx_version"
