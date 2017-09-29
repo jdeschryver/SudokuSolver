@@ -10,9 +10,9 @@ import org.apache.commons.lang3.StringUtils
 class Sudoku: Sudoku {
 
     private val board = Array<Cell>(9 * 9) { ECell() }
-    private val rowPossibilities = Array(9) { BitVector() }
-    private val colPossibilities = Array(9) { BitVector() }
-    private val squarePossibilities = Array(9) { BitVector() }
+    private val rowVector = Array(9) { BitVector() }
+    private val colVector = Array(9) { BitVector() }
+    private val squareVector = Array(9) { BitVector() }
 
     override fun fill(values: List<Triple<Int, Int, Int>>) {
         values.forEach { (row, col, value) ->
@@ -21,10 +21,42 @@ class Sudoku: Sudoku {
     }
 
     override fun solve(): Boolean {
-        //TODO: Make this shit solve the fucking sudoku
-
-        return true
+        val index = nextECell()
+        return index?.let {
+            solve(index)
+        } ?: false
     }
+
+    private fun solve(index: Int): Boolean {
+        val (row, col) = indexToCoord(index)
+        val vectors =  vectorsOfCell(row, col)
+        val possibilities = possibilities(vectors.first, vectors.second, vectors.third)
+
+        if (possibilities.isEmpty())
+            return false
+
+        val next = nextECell(index)
+
+        possibilities.forEach { entry ->
+            this[row, col] = entry
+            next?.let {
+                if (solve(it))
+                    return true
+            } ?: return true
+        }
+        this[row, col] = null
+        return false
+    }
+
+    private fun vectorsOfCell(row: Int, col: Int) = Triple(
+            rowVector[row],
+            colVector[col],
+            squareVector[(row / 3) * 3 + (col / 3)])
+
+
+    private fun nextECell(index: Int = -1) = ((index + 1)..(board.size - 1)).firstOrNull { board[it] is ECell }
+
+    private fun indexToCoord(index: Int) = index / 9 to index % 9
 
     override fun toArray() = board.map { it.value }.toTypedArray()
 
@@ -33,6 +65,17 @@ class Sudoku: Sudoku {
     override operator fun set(row: Int, col: Int, cell: Cell) {
         val index = row * 9 + col
         board[index] = cell
+    }
+
+    private operator fun set(row: Int, col: Int, value: Int?) {
+        val cell = this[row, col]
+        when (cell) {
+            is ECell -> {
+                vectorsOfCell(row, col).toList().forEach{ it.set(value); it.unSet(cell.value)}
+                cell.value = value
+            }
+            is SCell -> throw UnsupportedOperationException("Cannot edit given Cells.")
+        }
     }
 
     fun toPrettyString(): String {
@@ -48,9 +91,9 @@ class Sudoku: Sudoku {
             prettyString += '\n'
             if ((row + 1) % 3 == 0 && row != 8) prettyString += center
         }
-        prettyString += "rowPossibilities: ${rowPossibilities.contentDeepToString()}\n" +
-                "colPossibilities: ${colPossibilities.contentDeepToString()}\n" +
-                "squarePossibilities: ${squarePossibilities.contentDeepToString()}\n"
+        prettyString += "rowVector: ${rowVector.contentDeepToString()}\n" +
+                "colVector: ${colVector.contentDeepToString()}\n" +
+                "squareVector: ${squareVector.contentDeepToString()}\n"
         return prettyString
     }
 }
