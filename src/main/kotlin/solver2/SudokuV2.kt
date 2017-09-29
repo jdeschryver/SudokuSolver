@@ -20,7 +20,7 @@ data class Possibilities(private val rowC: MutableSet<Int>, private val colC: Mu
     fun combine() = rowC.intersect(colC).intersect(squareC)
 }
 
-class SudokuV2: Sudoku{
+class SudokuV2 : Sudoku {
 
     private val board = Array<Cell>(9 * 9) { ECell() }
     private val rowPossibilities = Array(9) { (1..9).toHashSet() }
