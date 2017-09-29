@@ -1,8 +1,6 @@
 package solver
 
-import api.Cell
-import api.ECell
-import api.SCell
+import api.*
 import api.Sudoku
 import org.apache.commons.lang3.StringUtils
 

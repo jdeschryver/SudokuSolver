@@ -1,9 +1,6 @@
 package solver2
 
-import api.Cell
-import api.ECell
-import api.SCell
-import api.Sudoku
+import api.*
 import org.apache.commons.lang3.StringUtils
 
 data class Possibilities(private val rowC: MutableSet<Int>, private val colC: MutableSet<Int>, private val squareC: MutableSet<Int>) {

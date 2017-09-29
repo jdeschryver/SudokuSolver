@@ -2,8 +2,7 @@ package ui
 
 import javafx.event.EventHandler
 import javafx.scene.control.TextField
-import tornadofx.addClass
-import tornadofx.onChange
+import tornadofx.*
 
 class CellUI(val row: Int, val col: Int) : TextField() {
 

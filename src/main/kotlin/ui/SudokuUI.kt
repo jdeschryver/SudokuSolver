@@ -2,18 +2,11 @@ package ui
 
 import api.Sudoku
 import javafx.event.EventHandler
-import javafx.scene.control.Button
-import javafx.scene.control.ChoiceBox
-import javafx.scene.control.ComboBox
+import javafx.scene.control.*
 import javafx.scene.input.KeyCode
-import javafx.scene.layout.BorderPane
-import javafx.scene.layout.GridPane
-import javafx.util.StringConverter
+import javafx.scene.layout.*
 import solver2.SudokuV2
-import tornadofx.View
-import tornadofx.addClass
-import tornadofx.onChange
-import tornadofx.warning
+import tornadofx.*
 import kotlin.system.measureNanoTime
 
 class SudokuUI : View() {
