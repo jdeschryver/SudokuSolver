@@ -12,7 +12,7 @@ fun possibilities(vararg vectors: BitVector): MutableSet<Int> {
     val possibilities = mutableSetOf<Int>()
 
     vectors.forEach { possVector -= it }
-    (0..8).forEach { if (possVector.isSet(it)) possibilities.add(it) }
+    (1..9).forEach { if (possVector.isSet(it)) possibilities.add(it) }
     return possibilities
 }
 
