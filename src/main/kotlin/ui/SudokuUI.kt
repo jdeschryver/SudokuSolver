@@ -6,6 +6,7 @@ import javafx.scene.control.*
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.*
 import solver2.SudokuV2
+import solver.SudokuV1
 import tornadofx.*
 import kotlin.system.measureNanoTime
 
@@ -35,7 +36,7 @@ class SudokuUI : View() {
     private var backup: List<Int?> = ArrayList(9 * 9)
 
     private val sudokuEntries = hashMapOf<String, () -> Sudoku>(
-            //"J Solver" to todo: <add constructor ref here>,
+            "J Solver" to ::SudokuV1,
             "K Solver" to ::SudokuV2
     )
 

@@ -22,7 +22,7 @@ fun possibilities(vararg vectors: BitVector): MutableSet<Int> {
 
 class BitVector(private var value: Int = 0) {
 
-    private fun Int.toMask() = 1 shl (this - 1) // We start form 0, Sudoku from 1
+    private fun Int.toMask() = 1 shl (this - 1) // We start form 0, SudokuV1 from 1
 
     fun set(index: Int?) {
         index?.let { value = value or index.toMask() }
