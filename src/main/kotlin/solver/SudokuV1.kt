@@ -1,8 +1,6 @@
 package solver
 
 import api.*
-import api.Sudoku
-import org.apache.commons.lang3.StringUtils
 
 /**
  * @author Jan De Schryver <Jan.DeSchryver@bucephalus.be>
@@ -24,11 +22,11 @@ class SudokuV1 : Sudoku {
         val index = nextECell()
         return index?.let {
             solve(index)
-        } ?: false
+        } == true
     }
 
     private fun solve(index: Int): Boolean {
-        val (row, col) = indexToCoord(index)
+        val (row, col) = indexToCoordinates(index)
         val vectors =  vectorsOfCell(row, col)
         val possibilities = possibilities(vectors.first, vectors.second, vectors.third)
 
@@ -56,7 +54,7 @@ class SudokuV1 : Sudoku {
 
     private fun nextECell(index: Int = -1) = ((index + 1)..(board.size - 1)).firstOrNull { board[it] is ECell }
 
-    private fun indexToCoord(index: Int) = index / 9 to index % 9
+    private fun indexToCoordinates(index: Int) = index / 9 to index % 9
 
     override fun toArray() = board.map { it.value }.toTypedArray()
 
@@ -76,24 +74,5 @@ class SudokuV1 : Sudoku {
             }
             is SCell -> throw UnsupportedOperationException("Cannot edit given Cells.")
         }
-    }
-
-    fun toPrettyString(): String {
-        val line = StringUtils.repeat('-', 5)
-        val center = StringUtils.repeat(line, "+", 3) + "\n"
-
-        var prettyString = ""
-        repeat(9) { row ->
-            repeat(9) { col ->
-                prettyString += this[row, col].value ?: '.'
-                prettyString += if ((col + 1) % 3 == 0 && col != 8) '|' else ' '
-            }
-            prettyString += '\n'
-            if ((row + 1) % 3 == 0 && row != 8) prettyString += center
-        }
-        prettyString += "rowVector: ${rowVector.contentDeepToString()}\n" +
-                "colVector: ${colVector.contentDeepToString()}\n" +
-                "squareVector: ${squareVector.contentDeepToString()}\n"
-        return prettyString
     }
 }

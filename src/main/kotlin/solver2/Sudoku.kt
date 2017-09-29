@@ -1,7 +1,6 @@
 package solver2
 
 import api.*
-import org.apache.commons.lang3.StringUtils
 
 data class Possibilities(private val rowC: MutableSet<Int>, private val colC: MutableSet<Int>, private val squareC: MutableSet<Int>) {
     fun add(i: Int): Boolean {
@@ -28,8 +27,7 @@ class SudokuV2: Sudoku{
     private val colPossibilities = Array(9) { (1..9).toHashSet() }
     private val squarePossibilities = Array(9) { (1..9).toHashSet() }
 
-    var isValid: Boolean = true
-        private set
+    private var isValid: Boolean = true
 
     override fun fill(values: List<Triple<Int, Int, Int>>) {
         values.forEach { (row, col, value) ->
@@ -44,11 +42,11 @@ class SudokuV2: Sudoku{
         val index = nextECell()
         return index?.let {
             isValid && solve(index)
-        } ?: false
+        } == true
     }
 
     private fun solve(index: Int): Boolean {
-        val (row, col) = indexToCoord(index)
+        val (row, col) = indexToCoordinates(index)
         val possibilities = possibilities(row, col).combine()
         if (possibilities.isEmpty())
             return false
@@ -68,7 +66,7 @@ class SudokuV2: Sudoku{
 
     override fun toArray() = board.map { it.value }.toTypedArray()
 
-    private fun indexToCoord(index: Int) = index / 9 to index % 9
+    private fun indexToCoordinates(index: Int) = index / 9 to index % 9
 
     private fun nextECell(index: Int = -1) = ((index + 1)..(board.size - 1)).firstOrNull { board[it] is ECell }
 
@@ -102,24 +100,4 @@ class SudokuV2: Sudoku{
         val index = row * 9 + col
         board[index] = cell
     }
-
-    fun toPrettyString(): String {
-        val line = StringUtils.repeat('-', 5)
-        val center = StringUtils.repeat(line, "+", 3) + "\n"
-
-        var prettyString = ""
-        repeat(9) { row ->
-            repeat(9) { col ->
-                prettyString += this[row, col].value ?: '.'
-                prettyString += if ((col + 1) % 3 == 0 && col != 8) '|' else ' '
-            }
-            prettyString += '\n'
-            if ((row + 1) % 3 == 0 && row != 8) prettyString += center
-        }
-        prettyString += "rowPossibilities: ${rowPossibilities.contentDeepToString()}\n" +
-                "colPossibilities: ${colPossibilities.contentDeepToString()}\n" +
-                "squarePossibilities: ${squarePossibilities.contentDeepToString()}\n"
-        return prettyString
-    }
-
 }
