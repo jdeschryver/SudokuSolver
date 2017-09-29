@@ -51,7 +51,6 @@ class SudokuV1 : Sudoku {
             colVector[col],
             squareVector[(row / 3) * 3 + (col / 3)])
 
-
     private fun nextECell(index: Int = -1) = ((index + 1)..(board.size - 1)).firstOrNull { board[it] is ECell }
 
     private fun indexToCoordinates(index: Int) = index / 9 to index % 9
@@ -63,6 +62,7 @@ class SudokuV1 : Sudoku {
     override operator fun set(row: Int, col: Int, cell: Cell) {
         val index = row * 9 + col
         board[index] = cell
+        vectorsOfCell(row, col).toList().forEach{ it.set(cell.value) }
     }
 
     private operator fun set(row: Int, col: Int, value: Int?) {

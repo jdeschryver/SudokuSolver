@@ -25,7 +25,7 @@ class BitVector(private var value: Int = 0) {
     }
 
     fun unSet(index: Int?) {
-        index?.let { value = value and index.toMask() }
+        index?.let { value = value and index.toMask().inv() }
     }
 
     fun isSet(index: Int) = value and index.toMask() != 0
