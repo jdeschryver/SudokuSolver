@@ -9,8 +9,9 @@ import org.apache.commons.lang3.StringUtils
 /**
  * @author Jan De Schryver <Jan.DeSchryver@bucephalus.be>
  */
-class Sudoku: Sudoku() {
+class Sudoku: Sudoku {
 
+    private val board = Array<Cell>(9 * 9) { ECell() }
     private val rowPossibilities = Array(9) { BitVector() }
     private val colPossibilities = Array(9) { BitVector() }
     private val squarePossibilities = Array(9) { BitVector() }
@@ -27,6 +28,14 @@ class Sudoku: Sudoku() {
         return true
     }
 
+    override fun toArray() = board.map { it.value }.toTypedArray()
+
+    override operator fun get(row: Int, col: Int) = board[row * 9 + col]
+
+    override operator fun set(row: Int, col: Int, cell: Cell) {
+        val index = row * 9 + col
+        board[index] = cell
+    }
 
     fun toPrettyString(): String {
         val line = StringUtils.repeat('-', 5)

@@ -24,7 +24,7 @@ data class Possibilities(private val rowC: MutableSet<Int>, private val colC: Mu
     fun combine() = rowC.intersect(colC).intersect(squareC)
 }
 
-class SudokuV2: Sudoku() {
+class SudokuV2: Sudoku{
 
     private val board = Array<Cell>(9 * 9) { ECell() }
     private val rowPossibilities = Array(9) { (1..9).toHashSet() }
@@ -69,6 +69,8 @@ class SudokuV2: Sudoku() {
         return false
     }
 
+    override fun toArray() = board.map { it.value }.toTypedArray()
+
     private fun indexToCoord(index: Int) = index / 9 to index % 9
 
     private fun nextECell(index: Int = -1) = ((index + 1)..(board.size - 1)).firstOrNull { board[it] is ECell }
@@ -95,6 +97,13 @@ class SudokuV2: Sudoku() {
             }
             is SCell -> throw UnsupportedOperationException("Cannot edit given Cells.")
         }
+    }
+
+    override operator fun get(row: Int, col: Int) = board[row * 9 + col]
+
+    override operator fun set(row: Int, col: Int, cell: Cell) {
+        val index = row * 9 + col
+        board[index] = cell
     }
 
     fun toPrettyString(): String {
