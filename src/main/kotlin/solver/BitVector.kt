@@ -5,19 +5,24 @@ package solver
  *
  */
 
+fun bitsOf(vararg bits: Int) : BitVector {
+    return BitVector().apply { bits.forEach{ set(it) } }
+}
+
 class BitVector(private var value: Int = 0) {
 
-    fun Int.toMask() = 1 shl this
-
     fun set(index: Int){
-        value = value or index.toMask()
+        value = value or (1 shl index)
     }
 
     fun unSet(index: Int){
-        value = value and index.toMask().inv()
+        value = value and (1 shl index).inv()
     }
 
-    fun isSet(index: Int) = value and index.toMask() != 0
+    fun isSet(index: Int) = (value and (1 shl index)) != 0
+
+    infix fun combine(vector: BitVector) =  BitVector(vector.value or this.value)
+    infix fun intersect(vector: BitVector) =  BitVector(vector.value and this.value)
 
     override fun toString() =  "$value"
 }
