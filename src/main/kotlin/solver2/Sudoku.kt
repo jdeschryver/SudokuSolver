@@ -26,7 +26,6 @@ data class Possibilities(private val rowC: MutableSet<Int>, private val colC: Mu
 
 class SudokuV2: Sudoku() {
 
-    private val board = Array<Cell>(9 * 9) { ECell() }
     private val rowPossibilities = Array(9) { (1..9).toHashSet() }
     private val colPossibilities = Array(9) { (1..9).toHashSet() }
     private val squarePossibilities = Array(9) { (1..9).toHashSet() }

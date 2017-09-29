@@ -2,7 +2,7 @@ package api
 
 abstract class Sudoku {
 
-    private val board = Array<Cell>(9 * 9) { ECell() }
+    protected val board = Array<Cell>(9 * 9) { ECell() }
 
     /**
      * return whether the sudoku has been solved or not,
