@@ -1,12 +1,11 @@
 package ui
 
 import api.Sudoku
-import javafx.event.EventHandler
 import javafx.scene.control.*
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.*
-import solver2.SudokuV2
 import solver.SudokuV1
+import solver2.SudokuV2
 import tornadofx.*
 import kotlin.system.measureNanoTime
 
@@ -56,15 +55,13 @@ class SudokuUI : View() {
 
         repeat(9) { row ->
             repeat(9) { col ->
-                val child = CellUI(row, col)
-
-                child.run {
+                val child = CellUI(row, col).apply {
                     textProperty().onChange {
                         if (!text.isEmpty())
                             selectCell(row, col + 1)
                     }
 
-                    onKeyPressed = EventHandler {
+                    setOnKeyPressed {
                         when (it.code) {
                             KeyCode.BACK_SPACE -> {
                                 clear()

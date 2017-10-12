@@ -1,7 +1,8 @@
 package ui
 
-import javafx.event.EventHandler
+import javafx.event.*
 import javafx.scene.control.TextField
+import javafx.scene.input.ContextMenuEvent
 import tornadofx.*
 
 class CellUI(val row: Int, val col: Int) : TextField() {
@@ -13,13 +14,12 @@ class CellUI(val row: Int, val col: Int) : TextField() {
     init {
         addClass(Styles.cellUI)
 
+        addEventFilter(ContextMenuEvent.CONTEXT_MENU_REQUESTED, Event::consume)
+
         focusedProperty().onChange { if (it) selectAll() }
+        setOnMouseClicked { selectAll() }
 
-        onMouseClicked = EventHandler {
-            selectAll()
-        }
-
-        onKeyTyped = EventHandler {
+        setOnKeyTyped {
             val c = it.character[0]
             when (c) {
                 in '1'..'9' -> clear()
